@@ -1,9 +1,11 @@
 from logic.MusicVideo import MusicVideo
 from logic.PerformanceVideo import PerformanceVideo
+from logic.PlayList import PlayList
+
 
 class Database:
-    @staticmethod
-    def get_videos():
+    @classmethod
+    def get_playlists(cls):
         bs_bbl = MusicVideo("Bruce Springsteen", "Blinded by the Light",
                             "https://www.youtube.com/watch?v=xPy82OO6vRg", 1973, "The original version")
         mm_bbl = MusicVideo("Manfred Mann's Earth Band", "Blinded by the Light",
@@ -15,7 +17,18 @@ class Database:
         ps_btn = MusicVideo("Patti Smith", "Because the Night",
                             "https://www.youtube.com/watch?v=c_BcivBprM0", 1978,
                             "Written by Bruce and Patti")
-        return [bs_bbl, mm_bbl, bs_btn, ps_btn]
+
+        bs = PlayList("Bruce Springsteen", [bs_bbl, bs_btn],
+                      "https://glassgirder.com/music_player/images/bruce.jpg",
+                      "The singer/composer Bruce Springsteen")
+        ps = PlayList("Patti Smith", [ps_btn],
+                      "https://glassgirder.com/music_player/images/patti.jpg",
+                      "Patti Smith")
+        all = PlayList(PlayList.ALL_VIDEOS, [bs_bbl, mm_bbl, bs_btn, ps_btn],
+                       "https://glassgirder.com/music_player/images/all_videos.jpg",
+                       "All Videos")
+
+        return all, [bs, ps, all]
 
 
 if __name__ == "__main__":
