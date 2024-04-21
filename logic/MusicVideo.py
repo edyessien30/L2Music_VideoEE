@@ -14,6 +14,17 @@ class MusicVideo:
         self.__note = note
         self.__class__.__map[self.get_key()] = self
 
+    def to_dict(self):
+        return {
+            "_id": self.get_key(),
+            "type": "MusicVideo",
+            "artist": self.__artist,
+            "title": self.__title,
+            "url": self.__url,
+            "year": self.__year,
+            "note": self.__note
+        }
+
     def get_key(self):
         return f"{self.__artist}: {self.__title}".lower()
 

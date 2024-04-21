@@ -10,6 +10,13 @@ class PerformanceVideo(MusicVideo):
         self.__performance_date = performance_date
         super().__init__(artist, title, url, year, note)
 
+    def to_dict(self):
+        dict = super().to_dict()
+        dict["type"] = "PerformanceVideo"
+        dict["location"] = self.__location
+        dict["performance_date"] = self.__performance_date
+        return dict
+
     def get_key(self):
         return f"{self.get_artist()}: {self.get_title()} at {self.__location} on {self.__performance_date}".lower()
 

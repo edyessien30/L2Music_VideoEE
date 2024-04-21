@@ -13,6 +13,15 @@ class PlayList:
         self.__description = description
         self.__class__.__map[self.get_key()] = self
 
+    def to_dict(self):
+        return {
+            "_id": self.get_key(),
+            "name": self.__name,
+            "thumbnail": self.__thumbnail,
+            "description": self.__description,
+            "videos": [video.get_key() for video in self.__videos]
+        }
+
     def get_key(self):
         return self.__name.lower()
 
@@ -66,3 +75,9 @@ class PlayList:
         from data.Database import Database
 
         return Database.get_playlists()
+
+    @staticmethod
+    def rebuild_data():
+        from data.Database import Database
+
+        return Database.rebuild_data()

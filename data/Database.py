@@ -1,9 +1,50 @@
 from logic.MusicVideo import MusicVideo
 from logic.PerformanceVideo import PerformanceVideo
 from logic.PlayList import PlayList
-
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 class Database:
+    PASSWORD = 'RXZaZJRhmSsnWZcq'
+    USERNAME = 'PlayListManager'
+    CLUSTER = 'cluster0.kfwjfnl.mongodb.net'
+    __connection = None
+    __database = None
+    __videos_collection = None
+    __playlists_collection = None
+    URI = f"mongodb+srv://{USERNAME}:{PASSWORD}@{CLUSTER}/?retryWrites=true&w=majority&appName=Cluster0"
+
+    @classmethod
+    def connect(cls):
+        if cls.__connection is None:
+            cls.__connection = MongoClient(cls.URI, server_api=ServerApi('1'))
+            cls.__database = cls.__connection.MusicBox
+            cls.__videos_collection = cls.__database.Videos
+            cls.__playlists_collection = cls.__database.PlayLists
+
+            print("Client:", cls.__connection)
+            print("Database:", cls.__database)
+            print("Videos:", cls.__videos_collection)
+            print("Playlists:", cls.__playlists_collection)
+
+    @classmethod
+    def rebuild_data(cls):
+        cls.connect()
+
+        # Remake both collections
+        cls.__videos_collection.drop()
+        cls.__videos_collection = cls.__database.Videos
+        cls.__playlists_collection.drop()
+        cls.__playlists_collection = cls.__database.PlayLists
+
+        all_videos, all_playlists = cls.get_playlists()
+
+        video_dicts = [video.to_dict() for video in all_videos]
+        cls.__videos_collection.insert_many(video_dicts)
+
+        playlist_dicts = [playlist.to_dict() for playlist in all_playlists]
+        cls.__playlists_collection.insert_many(playlist_dicts)
+
     @classmethod
     def get_playlists(cls):
         bs_bbl = MusicVideo("Bruce Springsteen", "Blinded by the Light",
@@ -32,6 +73,4 @@ class Database:
 
 
 if __name__ == "__main__":
-    videos = Database.get_videos()
-    for video in videos:
-        print(video.get_key(), ": ", video, sep="")
+    Database.connect()
