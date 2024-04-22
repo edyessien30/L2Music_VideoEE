@@ -11,7 +11,7 @@ class ConsoleUI:
     CHOICES = ["pv", "pp", "cp", "dp", "sp", "cv", "dv", "av", "rv", "uv", "jp", "x"]
     @classmethod
     def init(cls):
-        cls.__all_videos, cls.__all_playlists = PlayList.get_playlists()
+        cls.__all_videos, cls.__all_playlists = PlayList.read_data()
 
     @classmethod
     def select_playlist(cls, include_all_videos=False):
@@ -82,7 +82,7 @@ class ConsoleUI:
             return
         thumbnail = input_string("Please enter the URL for the thumbnail image: ", "Name must be non-empty.")
         description = input_string("Please enter a description for the playlist: ", valid=lambda x: True)
-        playlist = PlayList(name, [], thumbnail, description)
+        playlist = PlayList(name, [], thumbnail, description, save=True)
         cls.__all_playlists.append(playlist)
         print("Playlist created.")
 
@@ -133,9 +133,9 @@ class ConsoleUI:
         note = input_string("Please type a note for the video (or hit return): ", valid=lambda x: True)
         if is_performance_video:
             # location, performance_date
-            video = PerformanceVideo(artist, title, url, year, note, location, performance_date)
+            video = PerformanceVideo(artist, title, url, year, note, location, performance_date, save=True)
         else:
-            video = MusicVideo(artist, title, url, year, note)
+            video = MusicVideo(artist, title, url, year, note, save=True)
         cls.__all_videos.append(video)
         print("Video created.")
 

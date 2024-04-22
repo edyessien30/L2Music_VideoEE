@@ -22,10 +22,10 @@ class Database:
             cls.__videos_collection = cls.__database.Videos
             cls.__playlists_collection = cls.__database.PlayLists
 
-            print("Client:", cls.__connection)
-            print("Database:", cls.__database)
-            print("Videos:", cls.__videos_collection)
-            print("Playlists:", cls.__playlists_collection)
+            # print("Client:", cls.__connection)
+            # print("Database:", cls.__database)
+            # print("Videos:", cls.__videos_collection)
+            # print("Playlists:", cls.__playlists_collection)
 
     @classmethod
     def rebuild_data(cls):
@@ -44,6 +44,17 @@ class Database:
 
         playlist_dicts = [playlist.to_dict() for playlist in all_playlists]
         cls.__playlists_collection.insert_many(playlist_dicts)
+
+    @classmethod
+    def read_data(cls):
+        cls.connect()
+        video_dicts = list(cls.__videos_collection.find())
+        videos = [MusicVideo.build(video_dict) for video_dict in video_dicts]
+
+        playlist_dicts = list(cls.__playlists_collection.find())
+        playlists = [PlayList.build(playlist_dict) for playlist_dict in playlist_dicts]
+
+        return PlayList.lookup(PlayList.ALL_VIDEOS), playlists
 
     @classmethod
     def get_playlists(cls):
@@ -70,6 +81,26 @@ class Database:
                        "All Videos")
 
         return all, [bs, ps, all]
+
+    @classmethod
+    def save_playlist(cls, playlist):
+        cls.connect()
+        cls.__playlists_collection.update_one({"_id": playlist.get_key()}, {"$set": playlist.to_dict()}, upsert=True)
+
+    @classmethod
+    def save_video(cls, video):
+        cls.connect()
+        cls.__videos_collection.update_one({"_id": video.get_key()}, {"$set": video.to_dict()}, upsert=True)
+
+    @classmethod
+    def delete_playlist(cls, playlist):
+        cls.connect()
+        cls.__playlists_collection.delete_one({"_id": playlist.get_key()})
+
+    @classmethod
+    def delete_video(cls, video):
+        cls.connect()
+        cls.__videos_collection.delete_one({"_id": video.get_key()})
 
 
 if __name__ == "__main__":

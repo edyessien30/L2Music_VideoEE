@@ -6,12 +6,25 @@ class PlayList:
     __description = ""
     __map = {}
 
-    def __init__(self, name, videos, thumbnail, description):
+    def __init__(self, name, videos, thumbnail, description, save=False):
         self.__name = name
         self.__videos = videos
         self.__thumbnail = thumbnail
         self.__description = description
         self.__class__.__map[self.get_key()] = self
+        if save:
+            self.save()
+
+    @classmethod
+    def build(cls, playlist_dict):
+        from logic.MusicVideo import MusicVideo
+
+        return PlayList(
+            playlist_dict["name"],
+            [MusicVideo.lookup(key) for key in playlist_dict["videos"]],
+            playlist_dict["thumbnail"],
+            playlist_dict["description"]
+        )
 
     def to_dict(self):
         return {
@@ -34,6 +47,16 @@ class PlayList:
     def get_description(self):
         return self.__description
 
+    def __str__(self):
+        s = f"""Playlist: {self.__name}
+Thumbnail: {self.__thumbnail}, 
+Description: {self.__description}, 
+Videos: 
+"""
+        for video in self.__videos:
+            s += "    " + str(video) + "\n"
+        return s
+
     @classmethod
     def lookup(cls, key):
         lower_key = key.lower()
@@ -42,14 +65,24 @@ class PlayList:
         else:
             return None
 
-    def append(self, video):
+    def append(self, video, save=True):
+        from data.Database import Database
+
         self.__videos.append(video)
+        if save:
+            Database.save_playlist(self)
 
     def remove(self, video):
+        from data.Database import Database
         self.__videos.remove(video)
 
+        Database.save_playlist(self)
+
     def delete(self):
+        from data.Database import Database
+
         del self.__class__.__map[self.get_key()]
+        Database.delete_playlist(self)
 
     def __iter__(self):
         return self.__videos.__iter__()
@@ -64,10 +97,11 @@ class PlayList:
         new_playlist = PlayList(name, [], thumbnail, description)
         for video in self:
             if video not in new_playlist:
-                new_playlist.append(video)
+                new_playlist.append(video, save=False)
         for video in other:
             if video not in new_playlist:
-                new_playlist.append(video)
+                new_playlist.append(video, save=False)
+        new_playlist.save()
         return new_playlist
 
     @staticmethod
@@ -81,3 +115,14 @@ class PlayList:
         from data.Database import Database
 
         return Database.rebuild_data()
+
+    @staticmethod
+    def read_data():
+        from data.Database import Database
+
+        return Database.read_data()
+
+    def save(self):
+        from data.Database import Database
+
+        Database.save_playlist(self)

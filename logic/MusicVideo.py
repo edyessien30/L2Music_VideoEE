@@ -6,13 +6,39 @@ class MusicVideo:
     __note = ""
     __map = {}
 
-    def __init__(self, artist, title, url, year, note):
+    def __init__(self, artist, title, url, year, note, save=False):
         self.__artist = artist
         self.__title = title
         self.__url = url
         self.__year = year
         self.__note = note
         self.__class__.__map[self.get_key()] = self
+        if save:
+            self.save()
+
+
+    @classmethod
+    def build(cls, video_dict):
+        from logic.PerformanceVideo import PerformanceVideo
+
+        if video_dict["type"] == "MusicVideo":
+            return MusicVideo(
+                video_dict["artist"],
+                video_dict["title"],
+                video_dict["url"],
+                video_dict["year"],
+                video_dict["note"]
+            )
+        elif video_dict["type"] == "PerformanceVideo":
+            return PerformanceVideo(
+                video_dict["artist"],
+                video_dict["title"],
+                video_dict["url"],
+                video_dict["year"],
+                video_dict["note"],
+                video_dict["location"],
+                video_dict["performance_date"]
+            )
 
     def to_dict(self):
         return {
@@ -40,6 +66,7 @@ class MusicVideo:
 
     def update_note(self, note):
         self.__note = note
+        self.save()
 
     @classmethod
     def lookup(cls, key):
@@ -49,7 +76,10 @@ class MusicVideo:
             return None
 
     def delete(self):
+        from data.Database import Database
+
         del self.__class__.__map[self.get_key()]
+        Database.delete_playlist(self)
 
     def __str__(self):
         return f"{self.__title} by {self.__artist}: {self.__url}. {self.__note}"
@@ -59,3 +89,8 @@ class MusicVideo:
         from data.Database import Database
 
         return Database.get_videos()
+
+    def save(self):
+        from data.Database import Database
+
+        Database.save_video(self)
