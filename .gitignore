@@ -1,4 +1,4 @@
-.idea/
+cd m.idea/
 __pycache__/
 cert.pem
 key.pem
