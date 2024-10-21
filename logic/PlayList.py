@@ -15,7 +15,7 @@ class PlayList:
         return self.__name.lower()
 
     @classmethod
-    def get_key(cls, name):
+    def get_name(cls, name):
         return name.lower()
 
     @classmethod
@@ -24,3 +24,9 @@ class PlayList:
             return cls.__map[key]
         else:
             return None
+
+    @classmethod
+    def get_playlists(cls):
+        from data.Database import Database
+
+        return Database.get_data()

@@ -1,4 +1,3 @@
-
 def valid_g_number(n):
     return len(n) == 9 and n[0] == 'G' and n[1:9].isdigit()
 
@@ -27,6 +26,7 @@ def input_int(prompt="Please enter a whole number: ", error="Input must be a who
         except ValueError:
             print(error)
 
+
 def y_or_n(prompt="Please enter yes or no: ", error="Input must be either yes or no!"):
     while True:
         val = input(prompt).lower()
@@ -36,8 +36,10 @@ def y_or_n(prompt="Please enter yes or no: ", error="Input must be either yes or
             return False
         print(error)
 
+
 def is_non_empty(s):
     return len(s) > 0
+
 
 def input_string(prompt="Please type some text: ", error="Input must be non-empty!", valid=lambda s: len(s) > 0):
     while True:
@@ -48,6 +50,7 @@ def input_string(prompt="Please type some text: ", error="Input must be non-empt
             print(error)
         except ValueError:
             print(error)
+
 
 def select_item(prompt="Please type yes or no: ", error="Answer must be yes or no!", choices=["Yes", "No"], map=None):
     value_dict = {}
@@ -61,6 +64,7 @@ def select_item(prompt="Please type yes or no: ", error="Answer must be yes or n
         if val in value_dict:
             return value_dict[val]
         print(error)
+
 
 def input_item(type="int", *args, **kwargs):
     if type == "int":
