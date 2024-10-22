@@ -6,10 +6,12 @@ class PlayList:
     __map = {}
 
     def __init__(self, name, thumbnail, description):
-        self.__name = name
-        self.__thumbnail = thumbnail
-        self.__description = description
-        self.__class__.__map[self.get_key()] = self
+        self.name = name
+        self.thumbnail = thumbnail
+        self.description = description
+
+    def __str__(self):
+        return f"Name: {self.name}\nThumbnail: {self.thumbnail}\nDescription: {self.description}"
 
     def get_key(self):
         return self.__name.lower()
@@ -21,7 +23,7 @@ class PlayList:
     @classmethod
     def lookup(cls, key):
         if key in cls.__map:
-            return cls.__map[key]
+            return cls.__map[key.lower]
         else:
             return None
 

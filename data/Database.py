@@ -53,6 +53,30 @@ class Database:
 
         return [p_tb, lakers, clippers, warriors, kings]
 
+    playlists = []
+
+    @classmethod
+    def add_playlist(cls, playlist):
+        cls.playlists.append(playlist)
+
+    @classmethod
+    def delete_playlist(cls, name):
+        for playlist in cls.playlists:
+            if playlist.name == name:
+                cls.playlists.remove(playlist)
+                break
+
+    @classmethod
+    def get_playlist(cls, name):
+        for playlist in cls.playlists:
+            if playlist.name == name:
+                return playlist
+        return None
+
+    @classmethod
+    def get_all_playlists(cls):
+        return cls.playlists
+
 
 if __name__ == "__main__":
     videos = Database.get_data()
