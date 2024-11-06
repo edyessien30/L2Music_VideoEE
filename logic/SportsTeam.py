@@ -25,3 +25,13 @@ class SportsTeam:
 
     def get_year_of_establishment(self):
         return self.__year_of_establishment
+
+    def get_name(self):
+        return self.__team_name
+
+    def delete(self):
+        from data.Database import Database
+        del self.__class__.__map[self.get_key()]
+        Database.delete_team(self)
+
+
