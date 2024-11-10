@@ -22,6 +22,16 @@ class Conference:
         return (f"Name: {self.__name}\nThumbnail: {self.__thumbnail}\nDescription: "
                 f"{self.__description}\n"f"Teams: {all_team_names}\n")
 
+    def to_dict(self):
+        return {
+            "_id": self.get_key(),
+            "name": self.__name,        # Another addition to week 5
+            "thumbnail": self.__thumbnail,
+            "description": self.__description,
+            "teams": [team.get_key() for team in self.__teams]
+
+        }
+
     def get_key(self):
         return self.__name.lower()
 
@@ -52,3 +62,9 @@ class Conference:
         from data.Database import Database
 
         return Database.get_data()
+
+    @staticmethod
+    def rebuild_data():
+        from data.Database import Database
+
+        return Database.rebuild_data()

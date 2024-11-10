@@ -10,22 +10,22 @@ class Database:
     CLUSTER = "@cluster0.omcmt.mongodb.net"
     __connection = None
     __database = None
-    __videos__collection = None
-    __playlist__colletion = None
-    URI = "mongodb+srv://{USERNAME}}:{PASSWORD}{CLUSTER}}/?retryWrites=true&w=majority&appName=Cluster0"
+    __teams__collection = None
+    __conference__colletion = None
+    URI = f"mongodb+srv://{USERNAME}:{PASSWORD}{CLUSTER}/?retryWrites=true&w=majority&appName=Cluster0"
     all_conference = None
     @classmethod
     def connect(cls):
         if cls.__connection is None:
             cls.__connection = MongoClient(cls.URI, server_api=ServerApi('1'))
             cls.__database = cls.__connection.SportsTeams
-            cls.__videos__collection = cls.__database.Videos
-            cls.__playlist__colletion = cls.__database.Conference
+            cls.__teams__collection = cls.__database.Teams
+            cls.__conference__colletion = cls.__database.Conference
 
             print("Client:", cls.__connection)
             print("Database:", cls.__database)
-            print("Client:", cls.__videos__collection)
-            print("Client:", cls.__playlist__colletion)
+            print("Client:", cls.__teams__collection)
+            print("Client:", cls.__conference__colletion)
 
     @staticmethod
     def get_data():
@@ -150,6 +150,27 @@ class Database:
         # We just built all the teams along with their conferences.
         # In this case we will be returning all_conferences = all teams and a list of conferences
         return all_conference, [Western_Conference, Eastern_Conference, all_conference]
+
+    @classmethod
+    def rebuild_data(cls):
+        cls.connect()
+        cls.__teams__collection.drop()              #157-160 Remake both collections
+        cls.__teams__collection = cls.__database.Teams
+        cls.__conference__colletion.drop()
+        cls.__conference__colletion = cls.__database.Conference
+
+        all_teams, all_conferences = cls.get_data()
+
+        team_dicts = [team.to_dict() for team in all_teams]
+        cls.__teams__collection.insert_many(team_dicts)
+
+        conference_dicts = [conference.to_dict() for conference in all_conferences]
+        cls.__conference__colletion.insert_many(conference_dicts)
+
+
+
+     #   for team in all_teams:
+     #       print(team)                            # New addition to week 5 project Along with pymong connection above
 
     @classmethod
     def add_playlist(cls, playlist):

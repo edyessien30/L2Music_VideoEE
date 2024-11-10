@@ -14,6 +14,16 @@ class SportsTeam:
         self.__note = note
         self.__class__.__map[self.get_key()] = self
 
+    def to_dict(self):
+        return {
+            "_id": self.__get_key(),
+            "team_name": self.__team_name,
+            "location": self.__location,
+#            "url": self.__url,                                       # this is the dictionary
+#           "year_of_establishment": self.__year_of_establishment,   # another edition to part 1 of Databases
+#          "note": self.__note
+        }
+
     def get_key(self):
         return f"{self.__team_name}: {self.__location}".lower()
 
@@ -33,5 +43,3 @@ class SportsTeam:
         from data.Database import Database
         del self.__class__.__map[self.get_key()]
         Database.delete_team(self)
-
-
