@@ -196,6 +196,7 @@ class ConsoleUI:
             print("\nERROR! Record entry already exists!")
             return
         cls.__all_conferences.append(conference)
+        conference.save_conference()
         print(f"{conference.get_name()} has been added.")
 
     @classmethod

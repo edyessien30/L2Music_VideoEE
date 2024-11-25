@@ -1,4 +1,3 @@
-
 class Conference:
     ALL_TEAMS = "all teams"
     __name = ""
@@ -14,7 +13,7 @@ class Conference:
         self.__teams = teams
         self.__class__.__map[self.get_key()] = self
         if save:
-            self.save()
+            self.save_conference()
 
     def __iter__(self):
         return iter(self.__teams).__iter__()
@@ -105,7 +104,7 @@ class Conference:
             conference_dict["name"],
             conference_dict["thumbnail"],  # another addition to lab 6
             conference_dict["description"],
-            #conference_dict["teams"],  #returns team key but the team isn't built
+            # conference_dict["teams"],  #returns team key but the team isn't built
             [SportsTeam.lookup(key) for key in conference_dict["teams"]],  # This line builds the teams.     # "for key"
         )
 
@@ -135,7 +134,11 @@ class Conference:
 
         return Database.read_data()
 
-    def save(self):
+    def save_conference(self):
         from data.Database import Database
 
         Database.save_conference(self)
+
+    def update_conference(self, name):
+        self.__name = name  # method to update conference from marc video "Setter"
+        self.save_conference()
