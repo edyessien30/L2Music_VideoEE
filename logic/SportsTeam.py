@@ -60,6 +60,9 @@ class SportsTeam:
     def __str__(self):
         return f"{self.__team_name}: {self.__url}"
 
+    def to_html(self):
+        return f"<a href='{self.__url}'>{self.__team_name}: {self.__location}.</a>"
+
     def get_location(self):
         return self.__location
 

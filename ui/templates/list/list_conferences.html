@@ -1,0 +1,12 @@
+{% extends "default.html" %}
+{% block tittle %}List Conferences{% endblock %}
+{% block header %}All Conferences{% endblock %}
+{% block content %}
+<ul>
+    {% for conference in conferences %}
+        <li><a href="list_conference?conference={{ conference.get_key() }}">{{ conference.get_name() }}</a></li>>
+    {% endfor %}
+</ul>>
+{% endblock %}
+</body>
+</html>

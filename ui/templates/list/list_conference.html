@@ -1,0 +1,13 @@
+{% extends "default.html" %}
+{% block title %}{{ conference.get_name() }} Conference{% endblock %}
+{% block header %}{{ conference.get_name() }} Conference{% endblock %}
+{% block content %}
+<img src="{{ conference.get_thumbnail() }}">
+<p>{{ conference.get_description() }}</p>
+<h2>Teams in this conference:</h2>
+<ul>
+{% for teams in conference %}
+<li>{{ teams.to_html()|safe }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

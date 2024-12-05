@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sports Teams Home{% endblock %}</title>
+</head>
+<body>
+<h1>{% block header %}Please select an Option Below:{% endblock %}</h1>
+{% block content %}
+{% for group_key in options %}
+{% set option_dict = options[group_key] %}
+<h2>{{ group_key }}</h2>
+<ul>
+    {% for route in option_dict %}
+    <li><a href="/{{ route }}">{{ option_dict[route] }}.</a></li>
+    {% endfor %}
+</ul>>
+{% endfor %}
+{% endblock %}
+{% block footer %}
+<hr>
+Covered under <a href="https://creativecommons.org/licenses/by/4.0/deed.en">CC BY 4.0 DEED</a><br>
+contact marc at PCC CIS with any questions
+{% endblock %}
+</body>
+</html>
