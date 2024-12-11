@@ -1,0 +1,14 @@
+{% extends "default.html" %}
+{% block title %}Select a Conference and Show the Contents{% endblock %}
+{% block header %}Select a Conference and Show the Contents:{% endblock %}
+{% block content %}
+    <form method="POST" action="do_show_conference">
+    <table class="data_entry_form">
+ <tr><th><label>Conference Name:</label></th><td><input type="text" name="name"></td></tr>
+            {% set conference = "conference" %}
+{#            {% include "show_conference.html" %}#}
+        </td></tr>
+        <tr><th colspan="2"><button type="submit">SHOW</button></th></tr>
+    </table>
+    </form>
+{% endblock %}

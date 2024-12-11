@@ -1,0 +1,15 @@
+{% extends "default.html" %}
+{% block title %}Create New Sports Teams{% endblock %}
+{% block header %}Please enter the information for the new sports team:{% endblock %}
+{% block content %}
+    <form method="POST" action="do_create_sports_team">
+    <table class="data_entry_form">
+        <tr><th><label>team_name:</label></th><td><input type="text" name="team_name"></td></tr>
+        <tr><th><label>location:</label></th><td><input type="text" name="location"></td></tr>
+        <tr><th><label>url:</label></th><td><input type="text" name="url"></td></tr>
+        <tr><th><label>year_of_establishment:</label></th><td><input type="text" name="year_of_establishment"></td></tr>
+        <tr><th colspan="2"><button type="submit">CREATE</button></th></tr>
+    </table>
+    </form>
+{% endblock %}
+

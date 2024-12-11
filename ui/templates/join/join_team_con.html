@@ -1,0 +1,18 @@
+{% extends "default.html" %}
+{% block title %}Join Team to Conference Together{% endblock %}
+{% block header %}Please select a team and playlist for them to join together :{% endblock %}
+{% block content %}
+    <form method="POST" action="do_join_team_con">
+    <table class="data_entry_form">
+<tr><th><label>Conference Name:</label></th><td><input type="text" name="name"></td></tr>
+            {% set conference = "conference" %}
+        </td></tr>
+<tr><th><label>SportsTeam Name:</label></th><td><input type="text" name="team_name"></td></tr>
+            {% set team = "team" %}
+        </td></tr>
+<tr><th><label>SportsTeam location:</label></th><td><input type="text" name="location"></td></tr>
+            {% set conference = "conference" %}
+        <tr><th colspan="2"><button type="submit">JOIN</button></th></tr>
+    </table>
+    </form>
+{% endblock %}

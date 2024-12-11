@@ -1,0 +1,15 @@
+{% extends "default.html" %}
+{% block title %}Conference "{{ conference.get_name() }}" Created{% endblock %}
+{% block header %}SportsTeam "{{ team.get_name() }}" Created{% endblock %}
+{% block content %}
+<p>The existing conference {{ conference.get_name() }} and {{ team.get_name() }} were
+    successfully joined to form {{ conference.get_name() }}.</p>
+<img src="{{ conference.get_thumbnail() }}">
+<p>{{conference.get_description() }}</p>
+<h2>Teams:</h2>
+    <ul>
+    {% for conference in conferences %}
+    <li>{{ conference.to_html()|safe }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

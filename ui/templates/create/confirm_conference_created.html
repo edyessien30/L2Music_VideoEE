@@ -1,0 +1,9 @@
+{% extends "default.html" %}
+{% block title %}Conference "{{ conference.get_name() }}" Created{% endblock %}
+{% block header %}Conference "{{ conference.get_name() }}" Created{% endblock %}
+{% block content %}
+<img src="{{ conference.get_thumbnail() }}">
+<p>{{ conference.get_description() }}</p>
+{% endblock %}
+
+
