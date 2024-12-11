@@ -1,0 +1,8 @@
+{% extends "default.html" %}
+{% block title %}Conference "{{ conference.get_name() }}" Deleted{% endblock %}
+{% block header %}Conference "{{ conference.get_name() }}" Deleted{% endblock %}
+{% block content %}
+<p>Conference "{{ conference.get_name() }}" was successfully deleted.</p>
+</br>
+<a href="List/list_all_conferences">Back to Conferences</a>
+{% endblock %}

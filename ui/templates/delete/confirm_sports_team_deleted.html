@@ -1,0 +1,6 @@
+{% extends "default.html" %}
+{% block title %}SportsTeam "{{ sports_team.get_name() }}" by {{ sports_team.get_location() }} Deleted{% endblock %}
+{% block header %}SportsTeam "{{ sports_team.get_name() }}" by {{ sports_team.get_location() }} Deleted{% endblock %}
+{% block content %}
+<p>SportsTeam "{{ sports_team.get_name() }}" by {{ sports_team.get_location() }} was successfully deleted.</p>
+{% endblock %}

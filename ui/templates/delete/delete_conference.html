@@ -1,0 +1,12 @@
+{% extends "default.html" %}
+{% block title %}Delete Conference{% endblock %}
+{% block header %}Please enter the information for the conference to delete:{% endblock %}
+{% block content %}
+   <form method="POST" action="do_delete_conference">
+   <table class="data_entry_form">
+       <tr><th><label>Conference :</label></th><td><input type="text" name="name" required></td></tr>
+       <tr><th colspan="2"><button type="submit">DELETE</button></th></tr>
+   </table>
+   </form>
+{% endblock %}
+}

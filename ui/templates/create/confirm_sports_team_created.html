@@ -1,0 +1,8 @@
+{% extends "default.html" %}
+{% block title %}SportsTeam "{{ sports_team.get_name() }}" by {{ sports_team.get_location() }} Created{% endblock %}
+{% block header %}SportTeam "{{ sports_team.get_name() }}" by {{ sports_team.get_location() }} Created{% endblock %}
+{% block content %}
+<p>{{ sports_team.to_html()|safe }}</p>
+{% endblock %}
+
+

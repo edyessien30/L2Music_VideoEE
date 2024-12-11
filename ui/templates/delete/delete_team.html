@@ -1,0 +1,13 @@
+{% extends "default.html" %}
+{% block title %}Delete a team{% endblock %}
+{% block header %}Select a team and delete it:{% endblock %}
+{% block content %}
+    <form method="POST" action="do_delete_team">
+    <table class="data_entry_form">
+<tr><th><label>SportsTeam :</label></th><td><input type="text" name="team_name" required></td></tr>
+<tr><th><label>Location :</label></th><td><input type="text" name="location" required></td></tr>
+        </td></tr>
+        <tr><th colspan="2"><button type="submit">DELETE</button></th></tr>
+    </table>
+    </form>
+{% endblock %}
