@@ -142,3 +142,6 @@ class Conference:
     def update_conference(self, name):
         self.__name = name  # method to update conference from marc video "Setter"
         self.save_conference()
+
+    def empty_function(self):
+        pass
